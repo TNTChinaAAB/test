@@ -8,6 +8,7 @@ import WebUtils
 import Downloader
 from ShellUtils import *
 
+
 def ensureVersion():
     if Values.WEIGHT_FILE == "auto":
         Values.WEIGHT_FILE = "18b"

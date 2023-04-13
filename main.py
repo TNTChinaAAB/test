@@ -26,6 +26,7 @@ if __name__ == '__main__':
     Values.WEIGHT_FILE = args.weight
     Values.WEIGHT_FILE = Values.WEIGHT_FILE.lower()
     Values.FRPC = args.frpc
+    Handler.ensureVersion()
     callShell("mkdir -p /root/byTNTChina")
     callShell("mkdir -p /root/.katago")
     callShell("mkdir -p /root/.katago/trtcache")
