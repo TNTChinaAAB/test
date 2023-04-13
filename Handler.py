@@ -56,7 +56,9 @@ def handleResources():
     if FileUtils.isDirExists("/content/work.zip"):
         callShell("rm -rf /content/work.zip")
 
-    isWorkZipOK = zipfile.is_zipfile("/content/work.zip")
+    work_zip_url = "https://github.com/TNTChinaAAB/lib/releases/download/1.0.0/work.zip"
+    is_work_zip_same = WebUtils.getUrlFileSize(work_zip_url) == FileUtils.getFileSize("/content/work.zip")
+    isWorkZipOK = zipfile.is_zipfile("/content/work.zip") and is_work_zip_same
     isWorkDirExist = FileUtils.isDirExists("/content/work")
     isDownloadZipUnsuccessfully = isProcessFailed(1)
     isUnzippedUnsuccessfully = isProcessFailed(2)
@@ -67,7 +69,7 @@ def handleResources():
 
     if (isNeedToUnzip and (not isWorkZipOK)) or isNeedToDownloadZip:
         print("Downloading work.zip...")
-        status1 = callShell("gdown '1Af1iXwES-NSHhfByM-3kynyIXtK8aDGH&confirm=t' -O /content/work.zip")
+        status1 = callShell(f"wget \"{work_zip_url}\" -O /content/work.zip")
         FileUtils.chmod_file("/content/work.zip")
         handle_process(status1, "downloaded work.zip", "downloading work.zip", 1)
     if zipfile.is_zipfile("/content/work.zip") and isNeedToUnzip:
@@ -90,13 +92,13 @@ def unpacking_deb(dir_: str, lib1_path: str, targetDir: str):
 def check_libnvinfer_so():
     dir_ = "/root/byTNTChina"
     lib1_path = f"{dir_}/lib1.deb"
-    targetPath = "/content/work/data/bins/libnvinfer.so.8"
-    targetDir = "/content/work/data/bins"
+    target_path = "/content/work/data/bins/libnvinfer.so.8"
+    target_dir = "/content/work/data/bins"
     try:
-        ctypes.cdll.LoadLibrary(targetPath)
+        ctypes.cdll.LoadLibrary(target_path)
     except OSError as e_1:
         Downloader.download_libnvinfer_deb(Values.LIBNVINFER_VERSION, lib1_path)
-        unpacking_deb(dir_, lib1_path, targetDir)
+        unpacking_deb(dir_, lib1_path, target_dir)
 
 
 def isProcessFailed(code: int) -> int:
