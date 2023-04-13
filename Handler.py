@@ -13,15 +13,15 @@ def ensureVersion():
     if Values.WEIGHT_FILE == "auto":
         Values.WEIGHT_FILE = "18b"
 
-    is18b = Values.WEIGHT_FILE == "18b"
-    is40b = Values.WEIGHT_FILE == "40b"
-    is60b = Values.WEIGHT_FILE == "60b"
+    Values.is18b = Values.WEIGHT_FILE == "18b"
+    Values.is40b = Values.WEIGHT_FILE == "40b"
+    Values.is60b = Values.WEIGHT_FILE == "60b"
 
-    if is18b:
+    if Values.is18b:
         Values.numberThreads = 24
-    elif is60b:
+    elif Values.is60b:
         Values.numberThreads = 16
-    elif is40b:
+    elif Values.is40b:
         Values.numberThreads = 12
 
 
